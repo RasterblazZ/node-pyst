@@ -1,13 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Put Your Sh*t Together - Dashboard</title>
-    <link rel="stylesheet" href="/css/app.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./css/app.css">
+    <title>Put Your Shi*t Together - Dashboard</title>
+    <link rel="icon" href="./img/pst.png" type="image/x-icon">
 </head>
-<body class="bg-gray-100 text-gray-900">
-    <div class="container mx-auto p-8">
-        <h1 class="text-4xl font-bold mb-4">Welcome</h1>
-        <p class="text-lg">Esta es una página de inicio simple usando Tailwind CSS.</p>
+<body>
+    <%- include ('./layouts/header') %>
+    <div class="flex h-screen">
+        <!-- Navbar lateral -->
+        <%- include ('./layouts/sidebar') %>
+        <main>
+            <!-- Contenido dinámico de cada página -->
+            <div class="container mx-auto p-4">
+                <!-- Aquí se insertará el contenido específico de cada página -->
+                Contenido
+            </div>
+        </main>
     </div>
+    <%- include ('./layouts/footer') %>
 </body>
 </html>
