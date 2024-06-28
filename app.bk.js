@@ -1,16 +1,12 @@
 const express = require('express');
-const path = require('path');
-const userRoutes = require('./routes/subRoutes');
-
 const app = express();
-// Middleware para parsear JSON
-app.use(express.json());
-// Middleware para parsear datos de formulario
-app.use(express.urlencoded({ extended: true }));
+
 // Configura el motor de plantillas EJS
 app.set('view engine', 'ejs');
+
 // Cambia el directorio predeterminado de vistas
 app.set('views', './src/views');
+
 // Sirve archivos estáticos desde la carpeta 'public'
 app.use(express.static('public'));
 
@@ -24,6 +20,12 @@ app.get('/dashboard', (req, res) => {
   res.render('index');
 });
 
-app.use('/subs', userRoutes);
+// Ruta para la página acerca de
+app.get('/subscriptions', (req, res) => {
+  res.render('subscriptions');
+});
 
-module.exports = app;
+// Inicia el servidor
+app.listen(3000, () => {
+  console.log('Servidor escuchando en el puerto 3000');
+});
