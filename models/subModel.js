@@ -12,6 +12,17 @@ const Sub = {
         });
     },
 
+    getAllSubs: (callback) => {
+        const query = 'SELECT * FROM subscriptions';
+        db.query(query, (err, results) => {
+            // console.log('resultado',results)
+            if (err) {
+                return callback(err, null);
+            }
+            callback(null, results);
+        });
+    },
+
     createSub: (req,callback) => {
         // console.log(callback)
         // console.log('BODY',req.body)

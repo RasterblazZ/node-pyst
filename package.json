@@ -12,6 +12,7 @@
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
+    "fullcalendar": "^6.1.14",
     "mysql2": "^3.10.1"
   },
   "devDependencies": {

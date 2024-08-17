@@ -1,24 +1,58 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/css/app.css">
-    <title>Put Your Shi*t Together - Dashboard</title>
-    <link rel="icon" href="/img/pst.png" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="/css/app.css">
+  <title>Put Your Shi*t Together - Dashboard</title>
+  <link rel="icon" href="/img/pst.png" type="image/x-icon">
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.min.js'></script>
 </head>
+
 <body class="bg-slate-700">
-    <%- include ('./layouts/header') %>
+  <%- include ('./layouts/header') %>
     <div class="flex h-screen text-white">
-        <!-- Navbar lateral -->
-        <%- include ('./layouts/sidebar') %>
-        <main>
-            <!-- Contenido dinámico de cada página -->
-            <div class="container mx-auto p-4">
-                <!-- Aquí se insertará el contenido específico de cada página -->
-            </div>
+      <!-- Navbar lateral -->
+      <%- include ('./layouts/sidebar') %>
+        <main class="container">
+          <div id='calendar' class="ml-4 mt-3 w-2/4"></div>
         </main>
     </div>
     <%- include ('./layouts/footer') %>
 </body>
+<script>
+  const initializeCalendar =  async ()=>{
+    let calendarEl = document.getElementById('calendar');
+    try {
+      const response = await fetch(`${window.location.protocol}//${window.location.host}/subs/events`);
+      const json = await response.json();
+
+      console.log(json.subs);
+      let currentDate = new Date();  // Get the current date
+      let year = currentDate.getFullYear();  // Get the full year (e.g., 2024)
+      let month = currentDate.getMonth() + 1
+      let calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        timeZone: 'UTC',
+        // Aquí utilizas el array map correctamente sin await
+        events: json.subs.map(sub => ({
+          title: sub.Nombre,
+          start: `${year}-${(month.toString().length == 1 ? '0'+month : month)}-${sub.MonthDay}`,
+          color: '#002e6b'
+        })),
+      });
+
+      calendar.render();
+    } catch (error) {
+      console.error("Error al obtener los eventos:", error);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    initializeCalendar()
+  });
+
+</script>
+
 </html>

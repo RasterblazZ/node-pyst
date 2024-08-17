@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const userRoutes = require('./routes/subRoutes');
+const homeRoutes = require('./routes/homeRoutes');
 
 const app = express();
 // Middleware para parsear JSON
@@ -16,14 +17,10 @@ app.use(express.static('public'));
 
 // Ruta para la página de inicio
 app.get('/', (req, res) => {
-  res.redirect('/dashboard')
+  res.redirect('/home')
 });
 
-// Ruta para la página de inicio
-app.get('/dashboard', (req, res) => {
-  res.render('index');
-});
-
+app.use('/home', homeRoutes);
 app.use('/subs', userRoutes);
 
 module.exports = app;
