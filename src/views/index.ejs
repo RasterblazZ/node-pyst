@@ -37,7 +37,7 @@
         timeZone: 'GMT-6',
         // Aquí utilizas el array map correctamente sin await
         events: json.subs.rows.map(sub => ({
-          title: sub.Nombre,
+          title: `${sub.Nombre} ${(sub.Monto * (sub.Moneda == 'USD' ? 7.7 : 1)).toFixed(2)}`,
           start: `${year}-${(month.toString().length == 1 ? '0'+month : month)}-${sub.MonthDay}`,
           color: '#002e6b'
         })),
