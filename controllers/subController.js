@@ -1,3 +1,4 @@
+const { response } = require('express');
 const User = require('../models/subModel');
 
 exports.getSubs = (req, res) => {
@@ -5,6 +6,7 @@ exports.getSubs = (req, res) => {
         if (err) {
             return res.status(500).json({ error: 'Error fetching subs' });
         }
+        // console.log(subs)
         res.render('subscriptions', { subs });
     });
 };
@@ -23,7 +25,7 @@ exports.getSubsJson = (req, res) => {
         if (err) {
             return res.status(500).json({ error: 'Error fetching subs' });
         }else{
-            return {subs}
+            return subs
         }
     });
 

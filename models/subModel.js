@@ -2,26 +2,56 @@ const db = require('../config/db');
 
 const Sub = {
     getAllSubs: (callback) => {
-        const query = 'SELECT * FROM subscriptions';
+        const query = `SELECT 
+        Tipo,
+        Nombre,
+        MonthDay,
+        Monto,
+        Moneda,
+        Estatus,
+        Creado,
+        Cancelado
+        FROM subscriptions
+        where Estatus = 'Activo'`;
         db.query(query, (err, results) => {
             // console.log('resultado',results)
             if (err) {
                 return callback(err, null);
             }
-            callback(null, results);
+            // Calcular el total
+            
+            let totales = {
+                "totalGeneral" : results.reduce((total, sub) => {
+                    return total + (sub.Monto * (sub.Moneda == 'USD' ? 7.7 : 1))
+                }, 0),
+                "totalUSD" : results.reduce((total, sub) => {
+                    return total + (sub.Moneda == 'USD' ? parseFloat(sub.Monto) : 0)
+                }, 0),
+                "totalGTQ" : results.reduce((total, sub) => {
+                    return total + (sub.Moneda == 'GTQ' ? parseFloat(sub.Monto) : 0)
+                }, 0),
+            }
+
+            let response = {
+                "totals" : totales,
+                "rows" : results,
+            }
+
+            // let totales = {"totalGeneral" : totalGeneral}
+            callback(null, response);
         });
     },
 
-    getAllSubs: (callback) => {
-        const query = 'SELECT * FROM subscriptions';
-        db.query(query, (err, results) => {
-            // console.log('resultado',results)
-            if (err) {
-                return callback(err, null);
-            }
-            callback(null, results);
-        });
-    },
+    // getAllSubs: (callback) => {
+    //     const query = 'SELECT * FROM subscriptions';
+    //     db.query(query, (err, results) => {
+    //         // console.log('resultado',results)
+    //         if (err) {
+    //             return callback(err, null);
+    //         }
+    //         callback(null, results);
+    //     });
+    // },
 
     createSub: (req,callback) => {
         // console.log(callback)

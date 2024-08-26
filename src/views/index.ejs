@@ -34,9 +34,9 @@
       let month = currentDate.getMonth() + 1
       let calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
-        timeZone: 'UTC',
+        timeZone: 'GMT-6',
         // Aquí utilizas el array map correctamente sin await
-        events: json.subs.map(sub => ({
+        events: json.subs.rows.map(sub => ({
           title: sub.Nombre,
           start: `${year}-${(month.toString().length == 1 ? '0'+month : month)}-${sub.MonthDay}`,
           color: '#002e6b'

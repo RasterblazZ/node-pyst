@@ -81,7 +81,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <% subs.forEach(sub => { %>
+                                    <% subs.rows.forEach(sub => { %>
                                         <tr>
                                             <td class="border-b border-gray-300 py-2 px-4"><%= sub.Tipo %></td>
                                             <td class="border-b border-gray-300 py-2 px-4"><%= sub.Nombre %></td>
@@ -92,6 +92,17 @@
                                         </tr>
                                     <% }); %>
                                 </tbody>
+                                <tfoot>
+                                    <td colspan="2">
+                                        <%= subs.totals.totalGeneral %>
+                                    </td>
+                                    <td colspan="2">
+                                        <%= subs.totals.totalUSD %>
+                                    </td>
+                                    <td colspan="2">
+                                        <%= subs.totals.totalGTQ %>
+                                    </td>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
