@@ -16,7 +16,14 @@ exports.getEvents = (req, res) => {
         if (err) {
             return res.status(500).json({ error: 'Error fetching subs' });
         }
-        res.json({ subs });
+
+        User.getAllPayments((err, payments) => {
+            if (err) {
+                return res.status(500).json({ error: 'Error fetching subs' });
+            }
+
+            res.json({payments,subs})
+        })
     });
 };
 

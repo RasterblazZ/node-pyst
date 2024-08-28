@@ -9,7 +9,6 @@ router.get('/', (req, res) => {
 
 // Ruta para la página de inicio
 router.get('/dashboard', (req, res) => {
-    let subs = subController.getSubsJson()
     // console.log(subs)
     res.render('index');
 });

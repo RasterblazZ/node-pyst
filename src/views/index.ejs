@@ -22,25 +22,38 @@
     <%- include ('./layouts/footer') %>
 </body>
 <script>
-  const initializeCalendar =  async ()=>{
+  const initializeCalendar = async () => {
     let calendarEl = document.getElementById('calendar');
     try {
       const response = await fetch(`${window.location.protocol}//${window.location.host}/subs/events`);
       const json = await response.json();
 
-      console.log(json.subs);
+     
       let currentDate = new Date();  // Get the current date
       let year = currentDate.getFullYear();  // Get the full year (e.g., 2024)
       let month = currentDate.getMonth() + 1
+
+      let subEvents = json.subs.rows.map(sub => ({
+        title: `${sub.Nombre} ${(sub.Monto * (sub.Moneda == 'USD' ? 7.7 : 1)).toFixed(2)}`,
+        start: `${year}-${(month.toString().length == 1 ? '0' + month : month)}-${sub.MonthDay}`,
+        color: '#002e6b'
+      }))
+
+      json.payments.rows.forEach(element => {
+        subEvents.push({
+          title: `${element.nombre} ${(element.monto).toFixed(2)}`,
+          start: `${year}-${(month.toString().length == 1 ? '0' + month : month)}-${element.monthDay}`,
+          color: '#20a500'
+        })
+      })
+      
+
+
       let calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         timeZone: 'GMT-6',
         // Aquí utilizas el array map correctamente sin await
-        events: json.subs.rows.map(sub => ({
-          title: `${sub.Nombre} ${(sub.Monto * (sub.Moneda == 'USD' ? 7.7 : 1)).toFixed(2)}`,
-          start: `${year}-${(month.toString().length == 1 ? '0'+month : month)}-${sub.MonthDay}`,
-          color: '#002e6b'
-        })),
+        events: subEvents
       });
 
       calendar.render();
