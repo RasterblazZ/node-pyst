@@ -23,10 +23,14 @@
 </body>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+    let thisMonthEvents = []
     const calendarEl = document.getElementById('calendar');
     const calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: 'dayGridMonth',
       timeZone: 'GMT-6',
+      dateClick: function(info) {
+        console.log(info)
+      },
       datesSet: function (info) {
         fillEvents(info)
         styles()
@@ -34,6 +38,7 @@
     });
 
     const fillEvents = async (info) => {
+      thisMonthEvents = []
       calendar.removeAllEvents()
       // console.log(info)
       const response = await fetch(`${window.location.protocol}//${window.location.host}/subs/events`);
@@ -55,7 +60,7 @@
 
         // console.log(event)
         calendar.addEvent(event)
-
+        thisMonthEvents.push(event)
       });
     }
 
