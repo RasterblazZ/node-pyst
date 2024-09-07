@@ -38,16 +38,9 @@
       let subEvents = json.subs.rows.map(sub => ({
         title: `${sub.Nombre} ${(sub.Monto * (sub.Moneda == 'USD' ? 7.7 : 1)).toFixed(2)}`,
         start: `${year}-${(month.toString().length == 1 ? '0' + month : month)}-${(sub.MonthDay.toString().length == 1 ? '0' + sub.MonthDay : sub.MonthDay)}`,
-        color: `${(sub.Tipo == 'Cuotas' ? '#8b8b02' : '#002e6b')}`
+        color: `${(sub.Tipo == 'Cuotas' ? '#8b8b02' : (sub.Tipo == 'Payment' ? '#20a500' : '#002e6b'))}`
       }))
 
-      json.payments.rows.forEach(element => {
-        subEvents.push({
-          title: `${element.nombre} ${(element.monto).toFixed(2)}`,
-          start: `${year}-${(month.toString().length == 1 ? '0' + month : month)}-${(element.monthDay.toString().length == 1 ? '0' + element.monthDay : element.monthDay)}`,
-          color: '#20a500'
-        })
-      })
       
       console.log(subEvents)
 

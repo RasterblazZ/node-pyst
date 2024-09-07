@@ -12,30 +12,13 @@ exports.getSubs = (req, res) => {
 };
 
 exports.getEvents = (req, res) => {
-    User.getAllSubs((err, subs) => {
+    User.getAllEvents((err, subs) => {
         if (err) {
-            return res.status(500).json({ error: 'Error fetching subs' });
+            return res.status(500).json({ error: 'Error fetching events' });
         }
 
-        User.getAllPayments((err, payments) => {
-            if (err) {
-                return res.status(500).json({ error: 'Error fetching subs' });
-            }
-
-            res.json({payments,subs})
-        })
+        res.json({subs})
     });
-};
-
-exports.getSubsJson = (req, res) => {
-    User.getAllSubs((err, subs) => {
-        if (err) {
-            return res.status(500).json({ error: 'Error fetching subs' });
-        }else{
-            return subs
-        }
-    });
-
 };
 
 exports.createSub = (req, res) => {
