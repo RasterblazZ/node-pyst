@@ -1,18 +1,20 @@
 const { response } = require('express');
-const User = require('../models/subModel');
+const Sub = require('../models/subModel');
 
 exports.getSubs = (req, res) => {
-    User.getAllSubs((err, subs) => {
+    Sub.getAllSubs((err, subs) => {
         if (err) {
             return res.status(500).json({ error: 'Error fetching subs' });
         }
-        // console.log(subs)
-        res.render('subscriptions', { subs });
+        Sub.getSubTypes((errST, subTypes) => {
+            // console.log({ subs, subTypes})
+            res.render('subscriptions', { subs, subTypes});
+        })
     });
 };
 
 exports.getEvents = (req, res) => {
-    User.getAllEvents((err, subs) => {
+    Sub.getAllEvents((err, subs) => {
         if (err) {
             return res.status(500).json({ error: 'Error fetching events' });
         }
@@ -22,7 +24,7 @@ exports.getEvents = (req, res) => {
 };
 
 exports.createSub = (req, res) => {
-    User.createSub(req,(err, users) => {
+    Sub.createSub(req,(err, subs) => {
         if (err) {
             // console.log(req)
             return res.status(500).json({ error: `Error creating subs ${err}` });

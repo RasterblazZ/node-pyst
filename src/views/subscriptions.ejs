@@ -29,11 +29,10 @@
                                 <div class="mb-4">
                                     <label for="sub-type" class="block font-medium mb-2">Tipo</label>
                                     <select id="sub-type" name="type" class="border border-gray-300 bg-gray-600 rounded-lg w-3/4 py-1 px-2" required>
-                                        <option value="Plataforma">Plataforma</option>
-                                        <option value="Banco">Banco</option>
-                                        <option value="Deuda">Deuda</option>
-                                        <option value="Servicio">Servicio</option>
-                                        <option value="Cuotas">Cuotas</option>
+                                        <!-- TODO: make the subscription id a foreign key on the subscriptions table. -->
+                                        <% subTypes.forEach(subType => { %>
+                                            <option value="<%=subType.Nombre%>"><%=subType.Nombre%></option>
+                                        <% }); %>
                                     </select>
                                 </div>
                                 <div class="mb-4">

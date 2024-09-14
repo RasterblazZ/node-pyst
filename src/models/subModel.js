@@ -1,6 +1,17 @@
 const db = require('../config/db');
 
 const Sub = {
+    getSubTypes: (callback) => {
+        const query = `SELECT * FROM subscription_type`;
+        db.query(query, (err, rows) => {
+            if (err)
+                return callback(err, null);
+
+            // let totales = {"totalGeneral" : totalGeneral}
+            callback(null, rows);
+        });
+    },
+
     getAllSubs: (callback) => {
         const query = `SELECT * FROM subscriptions where Estatus = 'Activo'`;
         db.query(query, (err, rows) => {
