@@ -53,7 +53,7 @@ const Sub = {
 
     createSub: (req,callback) => {
 
-        const query = `insert into subscriptions values('${req.body.type}','${req.body.plataform}','${req.body.monthday}','${req.body.monto}','${req.body.moneda}','${req.body.estatus}',DATE(NOW()),null)`;
+        const query = `insert into subscriptions values(null,'${req.body.type}','${req.body.plataform}','${req.body.monthday}','${req.body.monto}','${req.body.moneda}','${req.body.estatus}',DATE(NOW()),null)`;
         // console.log(query)
         db.query(query, (err, results) => {
             console.log('resultado',results)

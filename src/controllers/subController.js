@@ -25,9 +25,9 @@ exports.createSub = (req, res) => {
     User.createSub(req,(err, users) => {
         if (err) {
             // console.log(req)
-            return res.status(500).json({ error: 'Error fetching subs' });
+            return res.status(500).json({ error: `Error creating subs ${err}` });
         }else{
-            res.redirect('/subs/home')
+            res.redirect('/subs/list')
         }
     });
     
