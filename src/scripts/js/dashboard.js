@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     let thisMonthEvents = []
     const calendarEl = document.getElementById('calendar');
-
     if(calendarEl){
       const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
@@ -20,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
         calendar.removeAllEvents()
         // console.log(info)
         const response = await fetch(`${window.location.protocol}//${window.location.host}/subs/events`);
-        const json = await response.json();
+        let json = await response.json();
         
         var selectedDate = new Date(info.startStr);  // Crear una copia de la fecha original
         selectedDate.setDate(selectedDate.getDate() + 7);
@@ -56,5 +55,47 @@ document.addEventListener('DOMContentLoaded', function () {
   
       initializeCalendar()
 
+    }
+
+    const pieChart = document.getElementById('piechart_div')
+    if(pieChart){
+      google.charts.load('current', {'packages':['corechart']});
+      const googleChart = async () => {
+
+        const response = await fetch(`${window.location.protocol}//${window.location.host}/subs/events`);
+        let events = await response.json();
+
+        let dataRows = []
+        let total = 0
+        let totalPayments = 0;
+        events.totals.rows.forEach((value)=>{
+          if(value.Tipo != 'Payment'){
+            dataRows.push([value.Tipo,value.SubTotal])
+            total += value.SubTotal
+          }else{
+            totalPayments += value.SubTotal
+          }
+        })
+        dataRows.push(['Restante',totalPayments - total])
+
+        
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows(dataRows);
+        var options = 
+        {
+          'title':'Tipos de gasto',
+          'width':400,
+          'height':300,
+          'backgroundColor': 'transparent',
+          'chartArea':{width:'90%',height:'90%'},
+          'titleTextStyle':{color:'white'},
+          'legend':{position: 'right',textStyle: {color: 'white', fontSize: 16}}
+        };
+        var chart = new google.visualization.PieChart(pieChart);
+        chart.draw(data, options);
+      }
+      google.charts.setOnLoadCallback(googleChart);
     }
   });
