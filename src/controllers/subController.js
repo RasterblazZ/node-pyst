@@ -21,14 +21,25 @@ exports.getSubs = (req, res) => {
 };
 
 exports.getEvents = (req, res) => {
-    Sub.getAllEvents((err, events) => {
-        if (err) {
-            return res.status(500).json({ error: 'Error fetching events' });
-        }
-        Sub.getAgrupationTotals((errAT,totals)=>{
-            res.json({events,totals})
-        })
-    });
+    const date = req.params.date;
+
+    if(date){
+        Sub.getEventsByDate(date,(err, events) => {
+            if (err) {
+                return res.status(500).json({ error: 'Error fetching events' });
+            }
+            res.json({events})
+        });
+    }else{
+        Sub.getAllEvents((err, events) => {
+            if (err) {
+                return res.status(500).json({ error: 'Error fetching events' });
+            }
+            Sub.getAgrupationTotals((errAT,totals)=>{
+                res.json({events,totals})
+            })
+        });
+    }
 };
 
 exports.getTvRStatement = (req, res) => {

@@ -7,14 +7,62 @@ document.addEventListener('DOMContentLoaded', function () {
         initialView: 'dayGridMonth',
         timeZone: 'GMT-6',
         dateClick: function(info) {
-          console.log(info)
+          clikDate(info)
         },
         datesSet: function (info) {
           fillEvents(info)
           styles()
         }
       });
-      
+      const clikDate = async (info) => {
+        let modal = document.getElementById('dashboard-modal-id')
+        let modalTitle = document.getElementById('dasboard-modal-title')
+        let modaldimiss = document.getElementById('dashboard-modal-dimiss')
+        let modalContent = document.getElementById('dasboard-modal-content')
+        modaldimiss.addEventListener('click',(event)=>{
+          modal.classList.add('hidden')
+        })
+        modal.classList.remove('hidden')
+        modalTitle.innerHTML = info.dateStr
+
+        let dateEvent = await fetch(`${window.location.protocol}//${window.location.host}/subs/events/${info.dateStr}`);
+        let json = await dateEvent.json();
+
+        let tbody = ''
+        json.events.rows.forEach(element => {
+          let row = `
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  ${element.Tipo} - ${element.Nombre}
+                </th>
+                <td class="px-6 py-4">${element.MonthDay}</td>
+                <td class="px-6 py-4">${element.Monto.toFixed(2)}</td>
+                <td class="px-6 py-4">${element.Moneda}</td>
+            </tr>
+          `
+          tbody+=row
+        });
+        
+        let table =
+        `
+        <div class="relative overflow-x-auto">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                      <th scope="col" class="px-6 py-3">Nombre</th>
+                      <th scope="col" class="px-6 py-3">MonthDay</th>
+                      <th scope="col" class="px-6 py-3">Monto</th>
+                      <th scope="col" class="px-6 py-3">Moneda</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${tbody}
+                </tbody>
+            </table>
+        </div>
+        `
+        modalContent.innerHTML=table
+      }
       const fillEvents = async (info) => {
         thisMonthEvents = []
         calendar.removeAllEvents()
@@ -31,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
   
         json.events.rows.forEach(sub => {
           let event = {
-            title: `${sub.Nombre} ${(sub.Monto * (sub.Moneda == 'USD' ? 7.7 : 1)).toFixed(2)}`,
+            title: `${sub.Nombre}`,
             start: `${year}-${(month.toString().length == 1 ? '0' + month : month)}-${(sub.MonthDay.toString().length == 1 ? '0' + sub.MonthDay : sub.MonthDay)}`,
             color: `${(sub.Tipo == 'Cuotas' ? '#8b8b02' : (sub.Tipo == 'Payment' ? '#20a500' : '#002e6b'))}`
           }

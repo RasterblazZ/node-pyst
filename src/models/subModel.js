@@ -59,6 +59,19 @@ const Sub = {
         });
     },
 
+    getEventsByDate: (date,callback) => {
+        let dateValues = date.split('-')
+        // TODO: there is a bug when replacing the 0 on '30' will show you '03' events
+        const query = `SELECT * FROM vw_statement where Estatus = 'Activo' and MonthDay = '${dateValues[2].replace('0','')}'`;
+        console.log(query)
+        db.query(query, (err, rows) => {
+            if (err)
+                return callback(err, null);
+            let response = {rows}
+            callback(null, response);
+        });
+    },
+
     getAllEvents: (callback) => {
         const query = `SELECT * FROM vw_statement where Estatus = 'Activo'`;
         db.query(query, (err, rows) => {
