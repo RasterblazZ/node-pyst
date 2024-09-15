@@ -21,12 +21,13 @@ exports.getSubs = (req, res) => {
 };
 
 exports.getEvents = (req, res) => {
-    Sub.getAllEvents((err, subs) => {
+    Sub.getAllEvents((err, events) => {
         if (err) {
             return res.status(500).json({ error: 'Error fetching events' });
         }
-
-        res.json({subs})
+        Sub.getAgrupationTotals((errAT,totals)=>{
+            res.json({events,totals})
+        })
     });
 };
 

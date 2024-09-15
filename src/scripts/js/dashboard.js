@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // console.log(info)
         const response = await fetch(`${window.location.protocol}//${window.location.host}/subs/events`);
         const json = await response.json();
-  
+        
         var selectedDate = new Date(info.startStr);  // Crear una copia de la fecha original
         selectedDate.setDate(selectedDate.getDate() + 7);
   
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let year = currentDate.getFullYear();  // Get the full year (e.g., 2024)
         let month = currentDate.getMonth() + 1
   
-        json.subs.rows.forEach(sub => {
+        json.events.rows.forEach(sub => {
           let event = {
             title: `${sub.Nombre} ${(sub.Monto * (sub.Moneda == 'USD' ? 7.7 : 1)).toFixed(2)}`,
             start: `${year}-${(month.toString().length == 1 ? '0' + month : month)}-${(sub.MonthDay.toString().length == 1 ? '0' + sub.MonthDay : sub.MonthDay)}`,

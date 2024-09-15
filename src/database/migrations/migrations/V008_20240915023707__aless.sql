@@ -1,0 +1,2 @@
+ALTER TABLE currency
+MODIFY COLUMN currency DECIMAL(3, 2);

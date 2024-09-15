@@ -83,6 +83,17 @@ const Sub = {
         });
     },
 
+    getAgrupationTotals: (callback) => {
+        const query = `SELECT * FROM vw_TypeAgrupation`;
+        db.query(query, (err, rows) => {
+            if (err)
+                return callback(err, null);
+
+            let response = {rows}
+            callback(null, response);
+        });
+    },
+
     createSub: (req,callback) => {
 
         const query = `insert into subscriptions values(null,'${req.body.type}','${req.body.plataform}','${req.body.monthday}','${req.body.monto}','${req.body.moneda}','${req.body.estatus}',DATE(NOW()),null)`;
