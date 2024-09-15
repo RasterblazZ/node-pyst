@@ -59,10 +59,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const pieChart = document.getElementById('piechart_div')
-    if(pieChart){
+    const lineChart = document.getElementById('linechart_div')
+    if(pieChart && lineChart){
       google.charts.load('current', {'packages':['corechart']});
-      const googleChart = async () => {
-
+      const pieChartInitialize = async () => {
         const response = await fetch(`${window.location.protocol}//${window.location.host}/subs/events`);
         let events = await response.json();
 
@@ -97,7 +97,70 @@ document.addEventListener('DOMContentLoaded', function () {
         var chart = new google.visualization.PieChart(pieChart);
         chart.draw(data, options);
       }
-      google.charts.setOnLoadCallback(googleChart);
+      const lineChartInitialize = async () => {
+        let response = await fetch(`${window.location.protocol}//${window.location.host}/subs/rptteoricvreal`);
+        let values = await response.json();
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('date', 'Date');
+        data.addColumn('number', 'Teoric');
+        data.addColumn('number', 'Real');
+
+        let dataRows = []
+        // console.log(values.data)
+        values.data.forEach((value)=>{
+          let dateString = value.full_date;
+          let parts = dateString.split('-');
+          let date = new Date(parts[0], parts[1] - 1, parts[2]);
+          dataRows.push([date,value.teoric_amount,value.real_amount])
+        })
+
+        data.addRows(dataRows);
+
+        var options = {
+          hAxis: {
+            title: 'Date',
+            titleTextStyle: {
+              color: 'white'
+            }
+          },
+          vAxis: {
+            title: 'Popularity',
+            titleTextStyle: {
+              color: 'white'
+            }
+          },
+          series: {
+            1: {curveType: 'function'},
+          },
+          'title':'Teorico vs Real',
+          'width':400,
+          'height':300,
+          'backgroundColor': 'transparent',
+          'chartArea':{width:'100%',height:'70%'},
+          'titleTextStyle':{color:'white'},
+          'colors':['#002e6b','#20a500']
+          
+        };
+
+        var chart = new google.visualization.LineChart(lineChart);
+        chart.draw(data, options);
+      }
+      const labelColorFix = () => {
+
+        let texts = document.querySelectorAll("svg > g > g > g > text");
+        texts.forEach(text => {
+            if (text.getAttribute('fill') == '#444444') {
+                text.setAttribute('fill','white')
+            }
+          })
+      }
+      const initializeCharts = async () => {
+        pieChartInitialize()
+        lineChartInitialize()
+        setTimeout(labelColorFix, 1000);
+      }
+      google.charts.setOnLoadCallback(initializeCharts);
     }
   });
 },{}],2:[function(require,module,exports){

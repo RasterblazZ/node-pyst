@@ -38,7 +38,6 @@ exports.getTvRStatement = (req, res) => {
         }
         let previusTeoricValue = 0
         let previusRealValue = 0
-        console.log(data)
         data = data.map( (row)=>{
             let newRow = {
                 "day_number": row.day_number,

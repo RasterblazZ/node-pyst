@@ -13,14 +13,18 @@
   <script src="/js/app.js"></script>
   
 </head>
-
 <body class="bg-slate-700">
   <%- include ('./layouts/header') %>
     <div class="flex h-screen text-white">
       <!-- Navbar lateral -->
       <%- include ('./layouts/sidebar') %>
       <div id='calendar' class="ml-4 mt-3 w-2/4 h-5/6"></div>
-      <div id="piechart_div" class="ml-4 mt-3 w-max"></div>
+      <div>
+        <div id="piechart_div" class="ml-4 mt-3 w-max"></div>
+        <div id="linechart_div" class="ml-4 mt-3 w-max"></div>
+      </div>
+      
+      
     </div>
     <%- include ('./layouts/footer') %>
 </body>
