@@ -31,6 +31,31 @@ exports.getEvents = (req, res) => {
     });
 };
 
+exports.getTvRStatement = (req, res) => {
+    Sub.getTeoricStatatement((err, data) => {
+        if (err) {
+            return res.status(500).json({ error: 'Error fetching statement' });
+        }
+        let previusTeoricValue = 0
+        let previusRealValue = 0
+        console.log(data)
+        data = data.map( (row)=>{
+            let newRow = {
+                "day_number": row.day_number,
+                "full_date": row.full_date,
+                "teoric_amount" : (parseFloat(row.Monto_Teorico) || 0) + previusTeoricValue,
+                "real_amount" : (parseFloat(row.Monto_Real) || previusRealValue),
+            }
+            // console.log(row.Monto , previusValue)
+            previusTeoricValue = (parseFloat(row.Monto_Teorico) || 0) + previusTeoricValue
+            previusRealValue = (parseFloat(row.Monto_Real) || previusRealValue)
+            return newRow
+            
+        })
+        res.json({data})
+    });
+};
+
 exports.createSub = (req, res) => {
     Sub.createSub(req,(err, subs) => {
         if (err) {

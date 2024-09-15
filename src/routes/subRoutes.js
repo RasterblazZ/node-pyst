@@ -6,5 +6,5 @@ router.get('/list', subController.getSubs);
 router.get('/events', subController.getEvents);
 router.post('/createSub', subController.createSub);
 router.post('/createPay', subController.createPayment);
-
+router.get('/rptteoricvreal', subController.getTvRStatement);
 module.exports = router;

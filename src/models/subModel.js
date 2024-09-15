@@ -83,6 +83,15 @@ const Sub = {
         });
     },
 
+    getTeoricStatatement: (callback) => {
+        const query = `SELECT * FROM vw_teorical_real_statement`;
+        db.query(query, (err, rows) => {
+            if (err)
+                return callback(err, null);
+            callback(null, rows);
+        });
+    },
+
     getAgrupationTotals: (callback) => {
         const query = `SELECT * FROM vw_TypeAgrupation`;
         db.query(query, (err, rows) => {
