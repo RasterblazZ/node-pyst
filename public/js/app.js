@@ -78,7 +78,6 @@ document.addEventListener('DOMContentLoaded', function () {
           }
         })
         dataRows.push(['Restante',totalPayments - total])
-
         
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Topping');
