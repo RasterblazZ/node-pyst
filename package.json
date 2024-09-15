@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "test": "start"
+    "test": "start",
+    "watch": "npx watchify ./src/scripts/js/subscriptions.js -o ./public/js/app.js"
   },
   "author": "rasterblazz",
   "license": "ISC",
@@ -16,6 +17,7 @@
     "mysql2": "^3.10.1"
   },
   "devDependencies": {
-    "tailwindcss": "^3.4.4"
+    "tailwindcss": "^3.4.4",
+    "watchify": "^4.0.0"
   }
 }
