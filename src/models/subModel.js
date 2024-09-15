@@ -108,7 +108,7 @@ const Sub = {
         const query = `insert into subscriptions values(null,'${req.body.type}','${req.body.plataform}','${req.body.monthday}','${req.body.monto}','${req.body.moneda}','${req.body.estatus}',DATE(NOW()),null)`;
         // console.log(query)
         db.query(query, (err, results) => {
-            console.log('resultado',results)
+            // console.log('resultado',results)
             if (err) {
                 return callback(err, null);
             }
@@ -121,7 +121,7 @@ const Sub = {
         const query = `insert into payments values(null,'${req.body.name}','${req.body.monto}','${req.body.monthday}')`;
         // console.log(query)
         db.query(query, (err, results) => {
-            console.log('resultado',results)
+            // console.log('resultado',results)
             if (err) {
                 return callback(err, null);
             }
