@@ -125,14 +125,12 @@ document.addEventListener('DOMContentLoaded', function () {
             }
           },
           vAxis: {
-            title: 'Popularity',
+            title: 'Amount',
             titleTextStyle: {
               color: 'white'
             }
           },
-          series: {
-            1: {curveType: 'function'},
-          },
+          curveType:"none",
           'title':'Teorico vs Real',
           'width':400,
           'height':300,
