@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function () {
           'backgroundColor': 'transparent',
           'chartArea':{width:'100%',height:'70%'},
           'titleTextStyle':{color:'white'},
-          'colors':['#002e6b','#20a500']
+          'colors':['#fcff58','#20a500']
           
         };
 
