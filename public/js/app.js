@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
           }
         })
         dataRows.push(['Restante',totalPayments - total])
-        
+
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Topping');
         data.addColumn('number', 'Slices');
@@ -91,7 +91,8 @@ document.addEventListener('DOMContentLoaded', function () {
           'backgroundColor': 'transparent',
           'chartArea':{width:'90%',height:'90%'},
           'titleTextStyle':{color:'white'},
-          'legend':{position: 'right',textStyle: {color: 'white', fontSize: 16}}
+          'legend':{position: 'right',textStyle: {color: 'white', fontSize: 16}},
+          'colors':['#002e6b','#8b8b02','#002e6b','#002e6b','#002e6b','#20a500']
         };
         var chart = new google.visualization.PieChart(pieChart);
         chart.draw(data, options);
@@ -99,4 +100,49 @@ document.addEventListener('DOMContentLoaded', function () {
       google.charts.setOnLoadCallback(googleChart);
     }
   });
-},{}]},{},[1]);
+},{}],2:[function(require,module,exports){
+require('./dashboard.js');
+require('./subscriptions.js');
+},{"./dashboard.js":1,"./subscriptions.js":3}],3:[function(require,module,exports){
+document.addEventListener('DOMContentLoaded', function () {
+    const forms = {
+        "subscription" : {
+            "form_id" : "newsubscription-form",
+            "table_id" : "subscription-table",
+        },
+        "payments" : {
+            "form_id" : "newpayment-form",
+            "table_id" : "payment-table",
+        }
+    }
+
+    const changePage = (direction) => {
+        // TODO: make this usefull when {forms} is bigger
+        if(direction == 'right'){
+            document.getElementById(forms.subscription.form_id).setAttribute('hidden','true')
+            document.getElementById(forms.subscription.table_id).setAttribute('hidden','true')
+
+            document.getElementById(forms.payments.form_id).removeAttribute('hidden')
+            document.getElementById(forms.payments.table_id).removeAttribute('hidden')
+        }else{
+            document.getElementById(forms.payments.form_id).setAttribute('hidden','true')
+            document.getElementById(forms.payments.table_id).setAttribute('hidden','true')
+
+            document.getElementById(forms.subscription.form_id).removeAttribute('hidden')
+            document.getElementById(forms.subscription.table_id).removeAttribute('hidden')
+        }
+    }
+
+    const formLeft = document.getElementById('btn-change-form-left')
+    if(formLeft)
+        formLeft.addEventListener('click',(event)=>{
+            changePage('left')
+        })
+    
+    const formRight = document.getElementById('btn-change-form-right')
+    if(formRight)
+        formRight.addEventListener('click',(event)=>{
+            changePage('right')
+        })
+})
+},{}]},{},[2]);

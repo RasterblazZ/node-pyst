@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
           }
         })
         dataRows.push(['Restante',totalPayments - total])
-        
+
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Topping');
         data.addColumn('number', 'Slices');
@@ -90,7 +90,8 @@ document.addEventListener('DOMContentLoaded', function () {
           'backgroundColor': 'transparent',
           'chartArea':{width:'90%',height:'90%'},
           'titleTextStyle':{color:'white'},
-          'legend':{position: 'right',textStyle: {color: 'white', fontSize: 16}}
+          'legend':{position: 'right',textStyle: {color: 'white', fontSize: 16}},
+          'colors':['#002e6b','#8b8b02','#002e6b','#002e6b','#002e6b','#20a500']
         };
         var chart = new google.visualization.PieChart(pieChart);
         chart.draw(data, options);
