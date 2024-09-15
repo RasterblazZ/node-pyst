@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const userRoutes = require('./routes/subRoutes');
+const subscriptionRoutes = require('./routes/subRoutes');
 const homeRoutes = require('./routes/homeRoutes');
 
 const app = express();
@@ -21,6 +21,6 @@ app.get('/', (req, res) => {
 });
 
 app.use('/home', homeRoutes);
-app.use('/subs', userRoutes);
+app.use('/subs', subscriptionRoutes);
 
 module.exports = app;

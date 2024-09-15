@@ -4,6 +4,7 @@ const subController = require('../controllers/subController');
 
 router.get('/list', subController.getSubs);
 router.get('/events', subController.getEvents);
-router.post('/create', subController.createSub);
+router.post('/createSub', subController.createSub);
+router.post('/createPay', subController.createPayment);
 
 module.exports = router;

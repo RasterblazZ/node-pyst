@@ -4,7 +4,7 @@
   "main": "app.js",
   "scripts": {
     "test": "start",
-    "watch": "npx watchify ./src/scripts/js/subscriptions.js -o ./public/js/app.js"
+    "buildjs": "browserify ./src/scripts/js/main.js -o ./public/js/app.js"
   },
   "author": "rasterblazz",
   "license": "ISC",
