@@ -6,5 +6,6 @@ router.get('/list', subController.getSubs);
 router.get('/events/:date?', subController.getEvents);
 router.post('/createSub', subController.createSub);
 router.post('/createPay', subController.createPayment);
+router.post('/createRealStatement', subController.createRealAmount);
 router.get('/rptteoricvreal', subController.getTvRStatement);
 module.exports = router;

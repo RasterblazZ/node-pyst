@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let tbody = ''
         json.events.rows.forEach(element => {
           let row = `
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <tr class="border-b dark:bg-gray-800 dark:border-gray-700">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   ${element.Tipo} - ${element.Nombre}
                 </th>
@@ -45,6 +45,24 @@ document.addEventListener('DOMContentLoaded', function () {
         let table =
         `
         <div class="relative overflow-x-auto">
+            <form action="/subs/createRealStatement" method="post">
+                <div class="mb-4">
+                    <label for="diary-type" class="block font-medium mb-2">Tipo</label>
+                    <select id="diary-type" name="accountType" class="border border-gray-300 bg-gray-600 rounded-lg w-3/4 py-1 px-2" required>
+                        <option value="Monetary">Monetary</option>
+                        <option value="Savings">Savings</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="diary-date" class="block font-medium mb-2">Dia del Mes</label>
+                    <input type="date" id="diary-date" name="date" class="border border-gray-300 bg-gray-600 rounded-lg w-3/4 py-1 px-2"  value="${info.dateStr}">
+                </div>
+                <div class="mb-4">
+                    <label for="diary-amount" class="block font-medium mb-2">Monto</label>
+                    <input type="number" step=".01" id="diary-amount" name="amount" class="border border-gray-300 bg-gray-600 rounded-lg w-3/4 py-1 px-2" required>
+                </div>
+                <button type="submit" class="bg-blue-500 text-white rounded-lg py-2 px-4 hover:bg-blue-600">Guardar</button>
+            </form>
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>

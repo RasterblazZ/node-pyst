@@ -141,6 +141,19 @@ const Sub = {
             callback(null, results);
         });
     },
+
+    createRealAmount: (req,callback) => {
+
+        const query = `insert into diary values (null,'${req.body.accountType}','${req.body.date}','${req.body.amount}')`;
+        // console.log(query)
+        db.query(query, (err, results) => {
+            // console.log('resultado',results)
+            if (err) {
+                return callback(err, null);
+            }
+            callback(null, results);
+        });
+    },
 };
 
 module.exports = Sub;

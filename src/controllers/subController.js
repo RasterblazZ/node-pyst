@@ -89,3 +89,15 @@ exports.createPayment = (req, res) => {
     });
     
 };
+
+exports.createRealAmount = (req, res) => {
+    Sub.createRealAmount(req,(err, subs) => {
+        if (err) {
+            // console.log(req)
+            return res.status(500).json({ error: `Error creating payment ${err}` });
+        }else{
+            res.redirect('/home/dashboard')
+        }
+    });
+    
+};
